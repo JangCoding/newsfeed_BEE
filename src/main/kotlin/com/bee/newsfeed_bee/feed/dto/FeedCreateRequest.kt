@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 
 data class FeedCreateRequest( // TODO API 명세와 프로퍼티 순서 다름
     val userId: Long, // TODO API 명세와 다른 부분 - 명세에 없음
-    val createdDateTime: LocalDateTime, // TODO API 명세와 다른 부분 - 명세에 없음
     @NotBlank(message = "storeName은 필수 입력 정보입니다.") val storeName: String,
     val category: String,
     @NotBlank(message = "address는 필수 입력 정보입니다.") val address: String, // Address라는 객체를 만들 필요가 있지 않을까?
