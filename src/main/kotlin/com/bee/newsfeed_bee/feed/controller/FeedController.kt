@@ -24,15 +24,17 @@ class FeedController {
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(FeedResponse())
+            .body(null)
     }
 
     @PostMapping
-    fun createFeed(@RequestBody feedCreateRequest: FeedCreateRequest): ResponseEntity<FeedResponse> {
+    fun createFeed(
+        @RequestBody feedCreateRequest: FeedCreateRequest
+    ): ResponseEntity<FeedResponse> {
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(FeedResponse())
+            .body(null)
     }
 
     @PutMapping("/{feedId}")
@@ -43,7 +45,7 @@ class FeedController {
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(FeedResponse())
+            .body(null)
     }
 
     @DeleteMapping("/{feedId}")
