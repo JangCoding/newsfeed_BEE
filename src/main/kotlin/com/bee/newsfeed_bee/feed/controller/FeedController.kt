@@ -3,6 +3,7 @@ package com.bee.newsfeed_bee.feed.controller
 import com.bee.newsfeed_bee.feed.dto.FeedCreateRequest
 import com.bee.newsfeed_bee.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.feed.dto.FeedUpdateRequest
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -29,7 +30,7 @@ class FeedController {
 
     @PostMapping
     fun createFeed(
-        @RequestBody feedCreateRequest: FeedCreateRequest
+        @Valid @RequestBody feedCreateRequest: FeedCreateRequest
     ): ResponseEntity<FeedResponse> {
 
         return ResponseEntity
@@ -40,7 +41,7 @@ class FeedController {
     @PutMapping("/{feedId}")
     fun updateFeed(
         @PathVariable feedId: Long,
-        @RequestBody feedUpdateRequest: FeedUpdateRequest
+        @Valid @RequestBody feedUpdateRequest: FeedUpdateRequest
     ): ResponseEntity<FeedResponse> {
 
         return ResponseEntity
