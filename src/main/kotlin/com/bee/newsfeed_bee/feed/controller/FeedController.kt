@@ -28,7 +28,7 @@ class FeedController {
     }
 
     @PostMapping
-    fun createFeed(feedCreateRequest: FeedCreateRequest): ResponseEntity<FeedResponse> {
+    fun createFeed(@RequestBody feedCreateRequest: FeedCreateRequest): ResponseEntity<FeedResponse> {
 
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -36,7 +36,10 @@ class FeedController {
     }
 
     @PutMapping("/{feedId}")
-    fun updateFeed(@PathVariable feedId: Long, feedUpdateRequest: FeedUpdateRequest): ResponseEntity<FeedResponse> {
+    fun updateFeed(
+        @PathVariable feedId: Long,
+        @RequestBody feedUpdateRequest: FeedUpdateRequest
+    ): ResponseEntity<FeedResponse> {
 
         return ResponseEntity
             .status(HttpStatus.OK)
