@@ -1,4 +1,4 @@
 package com.bee.newsfeed_bee.reply.controller
 
-class replyController {
+class ReplyController {
 }
