@@ -1,0 +1,36 @@
+spring:
+  config:
+    activate:
+      on-profile: local1 # 환경 분리 참고 https://velog.io/@devholic/Spring-YAML-여러-개-쓰기
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true #sql format 예쁘게
+        highlight_sql: true #sql 색칠해서
+        use_sql_comments: true #주석으로 부가정보 더 표시
+    open-in-view: true # 참고 OSIV https://livelyoneweek.tistory.com/57, https://velog.io/@dnwlsrla40/JPA-Open-In-View
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+  sql:
+    init:
+      mode: embedded # (cf.) default가 embedded
+  h2:
+    console:
+      enabled: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug # 표준 출력이 아니라 로거로 확인하려면 위 spring jpa 쪽 show-sql이 아니라 여기 logging에 설정해야 한다.
+        orm:
+          jdbc:
+            bind: trace #sql ? binding parameter까지 전부 확인하기
+      springframework:
+        boot:
+          autoconfigure:
+            logging: debug
