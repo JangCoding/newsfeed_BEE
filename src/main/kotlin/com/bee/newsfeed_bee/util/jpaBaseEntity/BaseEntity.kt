@@ -1,4 +1,4 @@
-package com.bee.newsfeed_bee.feed.entity
+package com.bee.newsfeed_bee.util.jpaBaseEntity
 
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners

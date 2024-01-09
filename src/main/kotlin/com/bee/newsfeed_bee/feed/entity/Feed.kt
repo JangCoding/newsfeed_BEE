@@ -1,5 +1,6 @@
 package com.bee.newsfeed_bee.feed.entity
 
+import com.bee.newsfeed_bee.util.jpaBaseEntity.BaseEntity
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
