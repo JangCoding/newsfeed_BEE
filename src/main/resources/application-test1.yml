@@ -22,11 +22,3 @@ spring:
   h2:
     console:
       enabled: true
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: debug # 표준 출력이 아니라 로거로 확인하려면 위 spring jpa 쪽 show-sql이 아니라 여기 logging에 설정해야 한다.
-        orm:
-          jdbc:
-            bind: trace #sql ? binding parameter까지 전부 확인하기
