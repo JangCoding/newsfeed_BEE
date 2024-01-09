@@ -1,4 +1,4 @@
-package com.bee.newsfeed_bee.feed.dto
+package com.bee.newsfeed_bee.domain.feed.dto
 
 import java.time.OffsetDateTime
 

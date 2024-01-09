@@ -1,12 +1,12 @@
-package com.bee.newsfeed_bee.feed.service
+package com.bee.newsfeed_bee.domain.feed.service
 
-import com.bee.newsfeed_bee.feed.dto.FeedCreateRequest
-import com.bee.newsfeed_bee.feed.dto.FeedResponse
-import com.bee.newsfeed_bee.feed.dto.FeedUpdateRequest
-import com.bee.newsfeed_bee.feed.entity.toEntity
-import com.bee.newsfeed_bee.feed.entity.toResponse
-import com.bee.newsfeed_bee.feed.entity.updateFrom
-import com.bee.newsfeed_bee.feed.repository.FeedRepository
+import com.bee.newsfeed_bee.domain.feed.dto.FeedCreateRequest
+import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
+import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
+import com.bee.newsfeed_bee.domain.feed.entity.toEntity
+import com.bee.newsfeed_bee.domain.feed.entity.toResponse
+import com.bee.newsfeed_bee.domain.feed.entity.updateFrom
+import com.bee.newsfeed_bee.domain.feed.repository.FeedRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.OffsetDateTime

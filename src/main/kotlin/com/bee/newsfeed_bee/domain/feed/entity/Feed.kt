@@ -1,8 +1,8 @@
-package com.bee.newsfeed_bee.feed.entity
+package com.bee.newsfeed_bee.domain.feed.entity
 
-import com.bee.newsfeed_bee.feed.dto.FeedCreateRequest
-import com.bee.newsfeed_bee.feed.dto.FeedResponse
-import com.bee.newsfeed_bee.feed.dto.FeedUpdateRequest
+import com.bee.newsfeed_bee.domain.feed.dto.FeedCreateRequest
+import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
+import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
 import com.bee.newsfeed_bee.util.jpaBaseEntity.BaseEntity
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

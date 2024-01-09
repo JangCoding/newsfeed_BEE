@@ -1,7 +1,8 @@
 package com.bee.newsfeed_bee.feed.service
 
-import com.bee.newsfeed_bee.feed.entity.Feed
-import com.bee.newsfeed_bee.feed.repository.FeedRepository
+import com.bee.newsfeed_bee.domain.feed.entity.Feed
+import com.bee.newsfeed_bee.domain.feed.repository.FeedRepository
+import com.bee.newsfeed_bee.domain.feed.service.FeedService
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
