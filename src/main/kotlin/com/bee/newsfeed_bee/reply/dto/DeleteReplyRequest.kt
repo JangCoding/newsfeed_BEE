@@ -1,4 +1,5 @@
 package com.bee.newsfeed_bee.reply.dto
 
-class DeleteReplyRequest {
-}
+data class DeleteReplyRequest (
+    val password:String
+)

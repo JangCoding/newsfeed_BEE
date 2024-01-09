@@ -1,11 +1,6 @@
 package com.bee.newsfeed_bee.reply.service
 
 import com.bee.newsfeed_bee.reply.dto.ReplyResponse
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
 
 
 interface ReplyService {

@@ -1,4 +1,6 @@
 package com.bee.newsfeed_bee.reply.dto
 
-class UpdateReplyRequest {
-}
+data class UpdateReplyRequest (
+    val password:String,
+    val content:String
+)

@@ -1,4 +1,7 @@
 package com.bee.newsfeed_bee.reply.dto
 
-class CreateReplyRequest {
-}
+data class CreateReplyRequest (
+    val userName:String,
+    val password:String,
+    val content:String
+)
