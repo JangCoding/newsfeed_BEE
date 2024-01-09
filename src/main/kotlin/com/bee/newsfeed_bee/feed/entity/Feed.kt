@@ -13,7 +13,7 @@ class Feed(
     var score: Int,
     var visitedDateTime: LocalDateTime,
     var waited: Boolean,
-    var storeSize: Long, // enum
+    var storeSize: Int, // enum
     var content: String,
 ) {
 
