@@ -7,7 +7,7 @@ import com.bee.newsfeed_bee.domain.reply.dto.UpdateReplyRequest
 
 
 interface ReplyService {
-    fun getReplys(feedId:Long) : List<ReplyResponse>
+    fun getReplyList(feedId:Long) : List<ReplyResponse>
     fun getReply(replyId:Long) : ReplyResponse
     fun createReply(feedId:Long, request: CreateReplyRequest) : ReplyResponse
     fun updateReply(replyId: Long, request: UpdateReplyRequest) : ReplyResponse

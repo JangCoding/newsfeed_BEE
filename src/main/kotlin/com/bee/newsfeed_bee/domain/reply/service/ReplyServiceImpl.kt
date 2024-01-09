@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service
 class ReplyServiceImpl(
     private var replyRepository: ReplyRepository
 ) : ReplyService {
-    override fun getReplys(feedId: Long): List<ReplyResponse> {
+    override fun getReplyList(feedId: Long): List<ReplyResponse> {
         return replyRepository.findAllByFeedId(feedId).map{it.toResponse()}
     }
 
