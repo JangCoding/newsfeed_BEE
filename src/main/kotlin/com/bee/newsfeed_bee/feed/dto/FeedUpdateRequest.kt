@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank
 import java.time.LocalDateTime
 
 data class FeedUpdateRequest( // TODO API 명세와 프로퍼티 순서 다름
-    val id: Long,
     val userId: Long, // TODO API 명세와 다른 부분 - 명세에 없음
     @NotBlank(message = "storeName은 필수 입력 정보입니다.") val storeName: String,
     val category: String,
