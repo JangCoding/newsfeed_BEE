@@ -21,13 +21,13 @@ class ReplyServiceImpl(
     }
 
     override fun getReply(replyId: Long): ReplyResponse {
-        var reply = replyRepository.findByIdOrNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
+        val reply = replyRepository.findByIdOrNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
         return reply.toResponse()
     }
 
     override fun createReply(feedId: Long, request: CreateReplyRequest): ReplyResponse {
-        var feed = feedRepository.findByIdOrNull(feedId) ?: throw ModelNotFoundException("Feed",feedId)
-        var reply = Reply(
+        val feed = feedRepository.findByIdOrNull(feedId) ?: throw ModelNotFoundException("Feed",feedId)
+        val reply = Reply(
             userName = request.userName,
             password = request.password,
             contents = request.contents,
@@ -36,7 +36,7 @@ class ReplyServiceImpl(
     }
 
     override fun updateReply(replyId: Long, request: UpdateReplyRequest): ReplyResponse {
-        var reply = replyRepository.findByIdOrNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
+        val reply = replyRepository.findByIdOrNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
         if (reply.password == request.password)
         {
             reply.contents = request.contents
@@ -47,8 +47,8 @@ class ReplyServiceImpl(
     }
 
     override fun deleteReply(feedId: Long, replyId: Long, request: DeleteReplyRequest) {
-        var feed = feedRepository.findByIdOrNull(feedId) ?: throw ModelNotFoundException("Feed",feedId)
-        var reply = replyRepository.findByIdOrNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
+        val feed = feedRepository.findByIdOrNull(feedId) ?: throw ModelNotFoundException("Feed",feedId)
+        val reply = replyRepository.findByIdOrNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
 
         if (reply.password == request.password)
         {
