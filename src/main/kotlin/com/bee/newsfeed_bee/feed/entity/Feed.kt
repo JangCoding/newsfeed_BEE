@@ -28,5 +28,18 @@ class Feed( // TODO: 수정 가능한 속성에 대해서는 더 논의할 필�
 }
 
 fun Feed.toResponse(): FeedResponse {
-    FeedResponse(this.id, "TODO", )
+    return FeedResponse(
+        id = this.id!!,
+        userNickname = "TODO",
+        createdDateTime = this.createdDateTime,
+        lastModifiedDateTime = this.lastModifiedDateTime,
+        storeName = this.storeName,
+        category = this.category,
+        address = this.address,
+        score = this.score,
+        visitedDateTime = this.visitedDateTime,
+        waited = this.waited,
+        storeSize = this.storeSize,
+        content = this.content
+        )
 }

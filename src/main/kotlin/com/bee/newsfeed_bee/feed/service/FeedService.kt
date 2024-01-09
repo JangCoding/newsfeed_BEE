@@ -3,12 +3,16 @@ package com.bee.newsfeed_bee.feed.service
 import com.bee.newsfeed_bee.feed.dto.FeedCreateRequest
 import com.bee.newsfeed_bee.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.feed.dto.FeedUpdateRequest
+import com.bee.newsfeed_bee.feed.entity.toResponse
+import com.bee.newsfeed_bee.feed.repository.FeedRepository
 import org.springframework.stereotype.Service
 
 @Service
-class FeedService {
+class FeedService(
+    private val feedRepository: FeedRepository
+) {
     fun getFeedList(): List<FeedResponse> {
-        return TODO()
+        return feedRepository.findAll().map { it.toResponse() }
     }
 
     fun getFeed(feedId: Long): FeedResponse {
