@@ -1,0 +1,24 @@
+spring:
+  config:
+    activate:
+      on-profile: test1
+  jpa:
+    hibernate:
+      ddl-auto: create # test에서는 스키마 대신 JPA ddl-auto 사용
+    properties:
+      hibernate:
+        format_sql: true #sql format 예쁘게
+        highlight_sql: true #sql 색칠해서
+        use_sql_comments: true #주석으로 부가정보 더 표시
+    open-in-view: true # 참고 OSIV https://livelyoneweek.tistory.com/57, https://velog.io/@dnwlsrla40/JPA-Open-In-View
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+  sql:
+    init:
+      mode: never # test에서는 스키마 대신 JPA ddl-auto 사용 (cf.) default가 embedded
+  h2:
+    console:
+      enabled: true

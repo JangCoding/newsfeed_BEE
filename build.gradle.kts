@@ -52,6 +52,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     // 어플리케이션이 실행될 때만 DB 드라이버를 설치하겠다.
     runtimeOnly("org.postgresql:postgresql")
+
+    // H2 database
+    implementation("com.h2database:h2")
+
+    // Kotest
+    testImplementation("io.kotest:kotest-runner-junit5:5.7.2")
+    testImplementation("io.kotest:kotest-assertions-core:5.7.2")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
 }
 
 tasks.withType<KotlinCompile> {

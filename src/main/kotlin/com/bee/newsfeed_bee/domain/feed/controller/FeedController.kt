@@ -1,9 +1,9 @@
-package com.bee.newsfeed_bee.feed.controller
+package com.bee.newsfeed_bee.domain.feed.controller
 
-import com.bee.newsfeed_bee.feed.dto.FeedCreateRequest
-import com.bee.newsfeed_bee.feed.dto.FeedResponse
-import com.bee.newsfeed_bee.feed.dto.FeedUpdateRequest
-import com.bee.newsfeed_bee.feed.service.FeedService
+import com.bee.newsfeed_bee.domain.feed.dto.FeedCreateRequest
+import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
+import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
+import com.bee.newsfeed_bee.domain.feed.service.FeedService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
