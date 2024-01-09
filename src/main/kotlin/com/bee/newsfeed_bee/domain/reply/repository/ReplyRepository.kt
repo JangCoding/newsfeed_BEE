@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ReplyRepository : JpaRepository<Reply, Long>{
     fun findAllByFeedId(feedId:Long):List<Reply>
-    fun findByIdAndDeletedDateTimeIsNull(id:Long):Reply
+    fun findByIdAndDeletedAtIsNull(id:Long):Reply
 }

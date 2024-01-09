@@ -4,12 +4,11 @@ import com.bee.newsfeed_bee.domain.feed.entity.Feed
 import com.bee.newsfeed_bee.domain.reply.dto.ReplyResponse
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
-import org.springframework.data.annotation.Id
 import java.time.OffsetDateTime
 
 
 @Entity
-@Table(name = "feed")
+//@Table(name = "feed")
 
 class Reply(
     @Column(name="username")
