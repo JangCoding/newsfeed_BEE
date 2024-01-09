@@ -1,6 +1,8 @@
 package com.bee.newsfeed_bee.feed.entity
 
+import com.bee.newsfeed_bee.feed.dto.FeedCreateRequest
 import com.bee.newsfeed_bee.feed.dto.FeedResponse
+import com.bee.newsfeed_bee.feed.dto.FeedUpdateRequest
 import com.bee.newsfeed_bee.util.jpaBaseEntity.BaseEntity
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -40,6 +42,34 @@ fun Feed.toResponse(): FeedResponse {
         visitedDateTime = this.visitedDateTime,
         waited = this.waited,
         storeSize = this.storeSize,
-        content = this.content
+        content = this.content,
         )
+}
+
+fun Feed.updateFrom(request: FeedUpdateRequest): Feed {
+    this.storeName = request.storeName
+    this.category = request.category
+    this.address = request.address
+    this.score = request.score
+    this.visitedDateTime = request.visitedDateTime
+    this.waited = request.waited
+    this.storeSize = request.storeSize
+    this.content = request.content
+
+    return this
+}
+
+fun FeedCreateRequest.toEntity(): Feed {
+    return Feed(
+        deletedDateTime = null,
+        userId = 0, // TODO 현재 인증 관련 부분이 추가되지 않았기 때문에 임시로만 넣어둠
+        storeName = this.storeName,
+        category = this.category,
+        address = this.address,
+        score = this.score,
+        visitedDateTime = this.visitedDateTime,
+        waited = this.waited,
+        storeSize = this.storeSize,
+        content = this.content,
+    )
 }
