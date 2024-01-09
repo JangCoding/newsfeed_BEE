@@ -11,6 +11,7 @@ import com.bee.newsfeed_bee.domain.reply.entity.Reply
 import com.bee.newsfeed_bee.domain.reply.entity.toResponse
 import com.bee.newsfeed_bee.domain.reply.repository.ReplyRepository
 import org.springframework.stereotype.Service
+import java.time.OffsetDateTime
 
 @Service
 class ReplyServiceImpl(
@@ -49,12 +50,12 @@ class ReplyServiceImpl(
     }
 
     override fun deleteReply(feedId: Long, replyId: Long, request: DeleteReplyRequest) {
-        val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId) ?: throw ModelNotFoundException("Feed",feedId)
+       // val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId) ?: throw ModelNotFoundException("Feed",feedId)
         val reply = replyRepository.findByIdAndDeletedDateTimeIsNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
 
         if (reply.password == request.password)
         {
-            feed.delete(reply)
+            reply.deletedAt = OffsetDateTime.now()
         }
         else
             throw InvalidCredentialsException("Password", "Reply")
