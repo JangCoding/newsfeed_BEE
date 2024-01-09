@@ -17,7 +17,7 @@ class Feed( // TODO: 수정 가능한 속성에 대해서는 더 논의할 필�
     var score: Int,
     var visitedDateTime: LocalDateTime,
     var waited: Boolean,
-    var storeSize: Long, // enum
+    var storeSize: Int, // enum
     var content: String,
 ) : BaseEntity() {
 
