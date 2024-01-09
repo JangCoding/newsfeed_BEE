@@ -1,11 +1,12 @@
 package com.bee.newsfeed_bee.reply.dto
 
 import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 data class ReplyResponse (
     val id:Long,
     val userName : String,
-    val content : String,
-    val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime
+    val contents : String,
+    val createdAt: OffsetDateTime,
+    val updatedAt: OffsetDateTime?
 )

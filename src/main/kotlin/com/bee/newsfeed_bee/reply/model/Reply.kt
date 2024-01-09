@@ -1,8 +1,10 @@
 package com.bee.newsfeed_bee.reply.model
 
+import com.bee.newsfeed_bee.reply.dto.ReplyResponse
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import org.springframework.data.annotation.Id
+import java.time.LocalDateTime
 import java.time.OffsetDateTime
 
 
@@ -37,4 +39,14 @@ class Reply(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id:Long?=null
+}
+
+fun Reply.toResponse():ReplyResponse{
+    return ReplyResponse(
+        id= id!!,
+        userName = userName,
+        contents = contents,
+        createdAt =createdAt,
+        updatedAt=updatedAt,
+    )
 }
