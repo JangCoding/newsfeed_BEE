@@ -1,6 +1,6 @@
-package com.bee.newsfeed_bee.reply.repository
+package com.bee.newsfeed_bee.domain.reply.repository
 
-import com.bee.newsfeed_bee.reply.model.Reply
+import com.bee.newsfeed_bee.domain.reply.model.Reply
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ReplyRepository : JpaRepository<Reply, Long>{

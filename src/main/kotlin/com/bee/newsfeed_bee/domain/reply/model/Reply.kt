@@ -1,6 +1,6 @@
-package com.bee.newsfeed_bee.reply.model
+package com.bee.newsfeed_bee.domain.reply.model
 
-import com.bee.newsfeed_bee.reply.dto.ReplyResponse
+import com.bee.newsfeed_bee.domain.reply.dto.ReplyResponse
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import org.springframework.data.annotation.Id
@@ -41,7 +41,7 @@ class Reply(
     var id:Long?=null
 }
 
-fun Reply.toResponse():ReplyResponse{
+fun Reply.toResponse(): ReplyResponse {
     return ReplyResponse(
         id= id!!,
         userName = userName,

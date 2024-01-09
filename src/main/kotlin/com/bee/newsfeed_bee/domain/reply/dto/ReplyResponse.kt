@@ -1,4 +1,4 @@
-package com.bee.newsfeed_bee.reply.dto
+package com.bee.newsfeed_bee.domain.reply.dto
 
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
