@@ -1,7 +1,5 @@
 package com.bee.newsfeed_bee.reply.dto
 
-import jakarta.persistence.JoinColumn
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class ReplyResponse (
