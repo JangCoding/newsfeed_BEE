@@ -7,7 +7,6 @@ import com.bee.newsfeed_bee.feed.entity.toEntity
 import com.bee.newsfeed_bee.feed.entity.toResponse
 import com.bee.newsfeed_bee.feed.entity.updateFrom
 import com.bee.newsfeed_bee.feed.repository.FeedRepository
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.OffsetDateTime
@@ -17,12 +16,11 @@ class FeedService(
     private val feedRepository: FeedRepository
 ) {
     fun getFeedList(): List<FeedResponse> {
-        return feedRepository.findAll().map { it.toResponse() }
+        return feedRepository.findAllByDeletedDateTimeIsNull().map { it.toResponse() }
     }
 
     fun getFeed(feedId: Long): FeedResponse {
-        return feedRepository.findByIdOrNull(feedId)?.toResponse()
-            ?: throw IllegalArgumentException("id에 해당하는 Feed가 존재하지 않습니다.")
+        return feedRepository.findByIdAndDeletedDateTimeIsNull(feedId).toResponse() // TODO EmptyResultDataAccessException 처리
     }
 
     fun createFeed(feedCreateRequest: FeedCreateRequest): FeedResponse {
@@ -32,17 +30,15 @@ class FeedService(
 
     @Transactional
     fun updateFeed(feedId: Long, feedUpdateRequest: FeedUpdateRequest): FeedResponse {
-        return feedRepository.findByIdOrNull(feedId)
-            .let { it?.updateFrom(feedUpdateRequest) ?: throw IllegalArgumentException("id에 해당하는 Feed가 존재하지 않습니다.") }
+        return feedRepository.findByIdAndDeletedDateTimeIsNull(feedId) // TODO EmptyResultDataAccessException 처리
+            .updateFrom(feedUpdateRequest)
             .toResponse()
     }
 
     @Transactional
     fun deleteFeed(feedId: Long): Unit {
-        return feedRepository.findByIdOrNull(feedId)
-            .let {
-                it?.deletedDateTime = OffsetDateTime.now()
-                    ?: throw IllegalArgumentException("id에 해당하는 Feed가 존재하지 않습니다.")
-            }
+        val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId) // TODO EmptyResultDataAccessException 처리
+        feed.deletedDateTime = OffsetDateTime.now()
+        feedRepository.save(feed)
     }
 }
