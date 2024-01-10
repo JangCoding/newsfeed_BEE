@@ -7,6 +7,8 @@ import com.bee.newsfeed_bee.domain.feed.entity.toEntity
 import com.bee.newsfeed_bee.domain.feed.entity.toResponse
 import com.bee.newsfeed_bee.domain.feed.entity.updateFrom
 import com.bee.newsfeed_bee.domain.feed.repository.FeedRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.OffsetDateTime
@@ -15,8 +17,8 @@ import java.time.OffsetDateTime
 class FeedService(
     private val feedRepository: FeedRepository
 ) {
-    fun getFeedList(): List<FeedResponse> {
-        return feedRepository.findAllByDeletedDateTimeIsNull().map { it.toResponse() }
+    fun getFeedList(pageable: Pageable): Page<FeedResponse> {
+        return feedRepository.findAll(pageable).map { it.toResponse() }
     }
 
     fun getFeed(feedId: Long): FeedResponse {
@@ -41,4 +43,8 @@ class FeedService(
         feed.deletedDateTime = OffsetDateTime.now()
         feedRepository.save(feed)
     }
+
+//    companion object {
+//        val feedPageSize = 6
+//    }
 }

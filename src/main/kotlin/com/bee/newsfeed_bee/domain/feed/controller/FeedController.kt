@@ -5,6 +5,12 @@ import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
 import com.bee.newsfeed_bee.domain.feed.service.FeedService
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Sort.Direction.DESC
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -16,9 +22,12 @@ class FeedController(
 ) {
 
     @GetMapping
-    fun getFeedList(): ResponseEntity<List<FeedResponse>> {
+    fun getFeedList(
+        @RequestParam(name = "page", required = false, defaultValue = "0") pageNumber: Int
+    ): ResponseEntity<Page<FeedResponse>> {
 
-        return feedService.getFeedList()
+        return PageRequest.of(pageNumber, DEFAULT_FEED_PAGE_SIZE, Sort.by(DESC, DEFAULT_FEED_SORT_PROPERTY))
+            .let { feedService.getFeedList(it) }
             .let {
                 ResponseEntity
                     .status(HttpStatus.OK)
@@ -73,5 +82,10 @@ class FeedController(
                     .status(HttpStatus.OK)
                     .build()
             }
+    }
+
+    companion object {
+        const val DEFAULT_FEED_PAGE_SIZE = 10
+        const val DEFAULT_FEED_SORT_PROPERTY = "createdDateTime"
     }
 }
