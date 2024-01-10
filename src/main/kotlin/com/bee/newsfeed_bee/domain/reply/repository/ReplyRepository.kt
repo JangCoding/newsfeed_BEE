@@ -4,6 +4,6 @@ import com.bee.newsfeed_bee.domain.reply.entity.Reply
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ReplyRepository : JpaRepository<Reply, Long>{
-    fun findAllByFeedId(feedId:Long):List<Reply>
+    fun findAllByFeedIdAndDeletedAtIsNull(feedId:Long):List<Reply>
     fun findByIdAndDeletedAtIsNull(id:Long):Reply
 }
