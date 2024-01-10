@@ -9,5 +9,7 @@ interface FeedRepository: JpaRepository<Feed, Long> {
 
     fun findAllByDeletedDateTimeIsNull(pageable: Pageable): Page<Feed> // 쿼리 메서드도 Pageable로 넣고 Page로 가져오겠다고 해도 알아서 잘 해결해줌
 
+    fun findAllByCategoryAndDeletedDateTimeIsNull(category: String, pageable: Pageable): Page<Feed>
+
     fun findByIdAndDeletedDateTimeIsNull(id: Long): Feed
 }

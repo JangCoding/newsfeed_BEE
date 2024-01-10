@@ -38,7 +38,7 @@ class FeedServiceTest (
     describe("getFeedList() 메서드는") {
         context("DB에 저장되어 있는 Feed가 없다면,") {
             it("size가 0인 리스트를 반환한다.") {
-                feedService.getFeedList(pageNumber).size shouldBeExactly 0
+                feedService.getFeedList(pageNumber, category).size shouldBeExactly 0
             }
         }
 
@@ -49,8 +49,8 @@ class FeedServiceTest (
             feedRepository.saveAll(feeds)
 
             it("size가 4인 리스트를 반환하고, 리스트의 첫번째 Feed의 storeName은 \"첫번째 식당\"이다.") {
-                feedService.getFeedList(pageNumber).size shouldBeExactly 4
-                feedService.getFeedList(pageNumber)[0].storeName shouldBeEqual "첫번째 식당"
+                feedService.getFeedList(pageNumber, category).size shouldBeExactly 4
+                feedService.getFeedList(pageNumber, category)[0].storeName shouldBeEqual "첫번째 식당"
             }
         }
     }

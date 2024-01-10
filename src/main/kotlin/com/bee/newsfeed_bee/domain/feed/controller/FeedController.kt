@@ -21,11 +21,12 @@ class FeedController(
 
     @GetMapping
     fun getFeedList(
-        @RequestParam(name = "page", required = false, defaultValue = "1") pageNumber: Int
+        @RequestParam(name = "category", required = false) category: String?,
+        @RequestParam(name = "page", required = false, defaultValue = "1") pageNumber: Int,
     ): ResponseEntity<Page<FeedResponse>> {
 
         return PageRequest.of(pageNumber - BASE_PAGE_NUMBER, DEFAULT_FEED_PAGE_SIZE, defaultFeedSort)
-            .let { feedService.getFeedList(it) }
+            .let { feedService.getFeedList(category, it) }
             .let {
                 ResponseEntity
                     .status(HttpStatus.OK)
