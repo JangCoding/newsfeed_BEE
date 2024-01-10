@@ -18,7 +18,7 @@ class FeedService(
     private val feedRepository: FeedRepository
 ) {
     fun getFeedList(pageable: Pageable): Page<FeedResponse> {
-        return feedRepository.findAll(pageable).map { it.toResponse() }
+        return feedRepository.findAllByDeletedDateTimeIsNull(pageable).map { it.toResponse() }
     }
 
     fun getFeed(feedId: Long): FeedResponse {
