@@ -22,17 +22,22 @@ class ReplyServiceImpl(
     private var feedRepository : FeedRepository
 ) : ReplyService {
     override fun getReplyList(feedId: Long): List<ReplyResponse> {
-        return replyRepository.findAllByFeedId(feedId).map{it.toResponse()}
+        return replyRepository.findAllByFeedIdAndDeletedAtIsNull(feedId).map{it.toResponse()}
     }
 
     override fun getReply(replyId: Long): ReplyResponse {
-        val reply = replyRepository.findByIdAndDeletedAtIsNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
-        return reply.toResponse()
+        val reply = replyRepository.findByIdAndDeletedAtIsNull(replyId)
+            .let{
+                if(it == null)
+                    throw ModelNotFoundException("Reply", replyId)
+                else
+                    return it.toResponse()
+            }
     }
 
     override fun createReply(feedId: Long, request: CreateReplyRequest): ReplyResponse {
-        val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId) ?: throw ModelNotFoundException("Feed",feedId)
-        println(feed.id)
+        val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId)
+            ?: throw ModelNotFoundException("Feed",feedId)
         val reply = Reply(
             userName = request.userName,
             password = request.password,
