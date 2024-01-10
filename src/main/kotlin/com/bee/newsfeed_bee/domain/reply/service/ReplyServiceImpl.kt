@@ -2,13 +2,11 @@ package com.bee.newsfeed_bee.domain.reply.service
 
 import com.bee.newsfeed_bee.domain.exception.InvalidCredentialsException
 import com.bee.newsfeed_bee.domain.exception.ModelNotFoundException
-import com.bee.newsfeed_bee.domain.feed.entity.toEntity
-import com.bee.newsfeed_bee.domain.feed.entity.toResponse
 import com.bee.newsfeed_bee.domain.feed.repository.FeedRepository
-import com.bee.newsfeed_bee.domain.reply.dto.CreateReplyRequest
-import com.bee.newsfeed_bee.domain.reply.dto.DeleteReplyRequest
+import com.bee.newsfeed_bee.domain.reply.dto.ReplyCreateRequest
+import com.bee.newsfeed_bee.domain.reply.dto.ReplyDeleteRequest
 import com.bee.newsfeed_bee.domain.reply.dto.ReplyResponse
-import com.bee.newsfeed_bee.domain.reply.dto.UpdateReplyRequest
+import com.bee.newsfeed_bee.domain.reply.dto.ReplyUpdateRequest
 import com.bee.newsfeed_bee.domain.reply.entity.Reply
 import com.bee.newsfeed_bee.domain.reply.entity.toResponse
 import com.bee.newsfeed_bee.domain.reply.repository.ReplyRepository
@@ -32,9 +30,7 @@ class ReplyServiceImpl(
             ?: throw ModelNotFoundException("Reply", replyId)
     }
 
-
-
-    override fun createReply(feedId: Long, request: CreateReplyRequest): ReplyResponse {
+    override fun createReply(feedId: Long, request: ReplyCreateRequest ): ReplyResponse {
         val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId)
             ?: throw ModelNotFoundException("Feed",feedId)
         return Reply(
@@ -47,7 +43,7 @@ class ReplyServiceImpl(
     }
 
     @Transactional
-    override fun updateReply(replyId: Long, request: UpdateReplyRequest): ReplyResponse {
+    override fun updateReply(replyId: Long, request: ReplyUpdateRequest): ReplyResponse {
         val reply = replyRepository.findByIdAndDeletedAtIsNull(replyId)
             ?: throw ModelNotFoundException("Reply", replyId)
 
@@ -62,7 +58,7 @@ class ReplyServiceImpl(
 
 
     @Transactional
-    override fun deleteReply(feedId: Long, replyId: Long, request: DeleteReplyRequest) {
+    override fun deleteReply(feedId: Long, replyId: Long, request: ReplyDeleteRequest) {
        // val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId) ?: throw ModelNotFoundException("Feed",feedId)
         val reply = replyRepository.findByIdAndDeletedAtIsNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
 
