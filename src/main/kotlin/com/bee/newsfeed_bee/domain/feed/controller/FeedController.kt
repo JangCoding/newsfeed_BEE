@@ -7,10 +7,8 @@ import com.bee.newsfeed_bee.domain.feed.service.FeedService
 import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.Direction.DESC
-import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -23,10 +21,10 @@ class FeedController(
 
     @GetMapping
     fun getFeedList(
-        @RequestParam(name = "page", required = false, defaultValue = "0") pageNumber: Int
+        @RequestParam(name = "page", required = false, defaultValue = "1") pageNumber: Int
     ): ResponseEntity<Page<FeedResponse>> {
 
-        return PageRequest.of(pageNumber, DEFAULT_FEED_PAGE_SIZE, Sort.by(DESC, DEFAULT_FEED_SORT_PROPERTY))
+        return PageRequest.of(pageNumber - BASE_PAGE_NUMBER, DEFAULT_FEED_PAGE_SIZE, defaultFeedSort)
             .let { feedService.getFeedList(it) }
             .let {
                 ResponseEntity
@@ -85,7 +83,9 @@ class FeedController(
     }
 
     companion object {
-        const val DEFAULT_FEED_PAGE_SIZE = 10
-        const val DEFAULT_FEED_SORT_PROPERTY = "createdDateTime"
+        private const val BASE_PAGE_NUMBER = 1
+        private const val DEFAULT_FEED_PAGE_SIZE = 10
+        private const val DEFAULT_FEED_SORT_PROPERTY = "createdDateTime"
+        private val defaultFeedSort = Sort.by(DESC, DEFAULT_FEED_SORT_PROPERTY)
     }
 }
