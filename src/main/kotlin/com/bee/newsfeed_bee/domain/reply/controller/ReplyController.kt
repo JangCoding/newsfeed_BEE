@@ -48,13 +48,4 @@ class ReplyController(
         replyService.deleteReply(feedId, replyId, request)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
-
-    @ExceptionHandler(ModelNotFoundException::class)
-    fun handleModelNotFoundException(e: ModelNotFoundException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(e.message))
-    }
-    @ExceptionHandler(InvalidCredentialsException::class)
-    fun handleInvalidCredentialsException(e: InvalidCredentialsException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(e.message))
-    }
 }
