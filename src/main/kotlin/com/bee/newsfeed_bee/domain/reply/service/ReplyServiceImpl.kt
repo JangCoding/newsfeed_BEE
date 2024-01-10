@@ -22,55 +22,53 @@ class ReplyServiceImpl(
     private var feedRepository : FeedRepository
 ) : ReplyService {
     override fun getReplyList(feedId: Long): List<ReplyResponse> {
-        return replyRepository.findAllByFeedIdAndDeletedAtIsNull(feedId).map{it.toResponse()}
+        return replyRepository.findAllByFeedIdAndDeletedAtIsNull(feedId)
+            .map{it.toResponse()}
     }
 
     override fun getReply(replyId: Long): ReplyResponse {
-        val reply = replyRepository.findByIdAndDeletedAtIsNull(replyId)
-            .let{
-                if(it == null)
-                    throw ModelNotFoundException("Reply", replyId)
-                else
-                    return it.toResponse()
-            }
+        return replyRepository.findByIdAndDeletedAtIsNull(replyId)
+            ?.let{ it.toResponse()}
+            ?: throw ModelNotFoundException("Reply", replyId)
     }
+
+
 
     override fun createReply(feedId: Long, request: CreateReplyRequest): ReplyResponse {
         val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId)
             ?: throw ModelNotFoundException("Feed",feedId)
-        val reply = Reply(
+        return Reply(
             userName = request.userName,
             password = request.password,
             contents = request.contents,
             feed = feed
-        )
-        replyRepository.save(reply)
-        return reply.toResponse()
+        ).let{replyRepository.save(it)}.toResponse()
+
     }
 
     @Transactional
     override fun updateReply(replyId: Long, request: UpdateReplyRequest): ReplyResponse {
-        val reply = replyRepository.findByIdAndDeletedAtIsNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
-        if (reply.password == request.password)
-        {
-            reply.contents = request.contents
-            reply.updatedAt = OffsetDateTime.now()
-        }
-        else
+        val reply = replyRepository.findByIdAndDeletedAtIsNull(replyId)
+            ?: throw ModelNotFoundException("Reply", replyId)
+
+        if (reply.password != request.password)
             throw InvalidCredentialsException("Password", "Reply")
+
+        reply.contents = request.contents
+        reply.updatedAt = OffsetDateTime.now()
+
         return reply.toResponse()
     }
+
 
     @Transactional
     override fun deleteReply(feedId: Long, replyId: Long, request: DeleteReplyRequest) {
        // val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId) ?: throw ModelNotFoundException("Feed",feedId)
         val reply = replyRepository.findByIdAndDeletedAtIsNull(replyId) ?: throw ModelNotFoundException("Reply", replyId)
 
-        if (reply.password == request.password)
-        {
-            reply.deletedAt = OffsetDateTime.now()
-        }
-        else
+        if (reply.password != request.password)
             throw InvalidCredentialsException("Password", "Reply")
+
+        reply.deletedAt = OffsetDateTime.now()
     }
 }
