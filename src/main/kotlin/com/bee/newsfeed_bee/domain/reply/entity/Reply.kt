@@ -1,14 +1,14 @@
-package com.bee.newsfeed_bee.domain.reply.model
+package com.bee.newsfeed_bee.domain.reply.entity
 
+import com.bee.newsfeed_bee.domain.feed.entity.Feed
 import com.bee.newsfeed_bee.domain.reply.dto.ReplyResponse
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
-import org.springframework.data.annotation.Id
 import java.time.OffsetDateTime
 
 
 @Entity
-@Table(name = "feed")
+//@Table(name = "feed")
 
 class Reply(
     @Column(name="username")
@@ -22,7 +22,7 @@ class Reply(
     var contents : String,
 
     @Column(name = "created_date_time")
-    var createdAt: OffsetDateTime = OffsetDateTime.now(),
+    val createdAt: OffsetDateTime = OffsetDateTime.now(),
 
     @Column(name = "last_modified_time")
     var updatedAt : OffsetDateTime ?= null,
@@ -33,7 +33,7 @@ class Reply(
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "feed_id")
-    var feed:Feed
+    var feed: Feed
 ){
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

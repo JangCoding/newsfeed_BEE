@@ -1,13 +1,11 @@
 package com.bee.newsfeed_bee.domain.reply.controller
 
-import com.bee.newsfeed_bee.domain.exception.InvalidCredentialsException
-import com.bee.newsfeed_bee.domain.exception.ModelNotFoundException
-import com.bee.newsfeed_bee.domain.reply.dto.CreateReplyRequest
-import com.bee.newsfeed_bee.domain.reply.dto.DeleteReplyRequest
+import com.bee.newsfeed_bee.domain.reply.dto.ReplyCreateRequest
+import com.bee.newsfeed_bee.domain.reply.dto.ReplyDeleteRequest
 import com.bee.newsfeed_bee.domain.reply.dto.ReplyResponse
-import com.bee.newsfeed_bee.domain.reply.dto.UpdateReplyRequest
+import com.bee.newsfeed_bee.domain.reply.dto.ReplyUpdateRequest
 import com.bee.newsfeed_bee.domain.reply.service.ReplyService
-import com.example.courseregistration.domain.exception.dto.ErrorResponse
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -31,30 +29,21 @@ class ReplyController(
     }
 
     @PostMapping()
-    fun createReply(@PathVariable feedId:Long, @RequestBody request: CreateReplyRequest) : ResponseEntity<ReplyResponse>
+    fun createReply(@PathVariable feedId:Long, @Valid @RequestBody request: ReplyCreateRequest) : ResponseEntity<ReplyResponse>
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(replyService.createReply(feedId, request))
     }
 
     @PutMapping("/{replyId}")
-    fun updateReply(@PathVariable feedId: Long, @PathVariable replyId: Long, @RequestBody request: UpdateReplyRequest) : ResponseEntity<ReplyResponse>
+    fun updateReply(@PathVariable feedId: Long, @PathVariable replyId: Long, @RequestBody request: ReplyUpdateRequest) : ResponseEntity<ReplyResponse>
     {
         return ResponseEntity.status(HttpStatus.OK).body(replyService.updateReply(replyId, request))
     }
 
     @DeleteMapping("/{replyId}")
-    fun deleteReply(@PathVariable feedId: Long, @PathVariable replyId: Long, @RequestBody request: DeleteReplyRequest) : ResponseEntity<Unit>
+    fun deleteReply(@PathVariable feedId: Long, @PathVariable replyId: Long, @RequestBody request: ReplyDeleteRequest) : ResponseEntity<Unit>
     {
         replyService.deleteReply(feedId, replyId, request)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
-    }
-
-    @ExceptionHandler(ModelNotFoundException::class)
-    fun handleModelNotFoundException(e: ModelNotFoundException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(e.message))
-    }
-    @ExceptionHandler(InvalidCredentialsException::class)
-    fun handleInvalidCredentialsException(e: InvalidCredentialsException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(e.message))
     }
 }
