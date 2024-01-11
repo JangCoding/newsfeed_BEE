@@ -69,6 +69,9 @@ dependencies {
     // queryDSL
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")
     kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta")
+
+    // Spring security core
+    implementation("org.springframework.security:spring-security-core:6.2.0")
 }
 
 tasks.withType<KotlinCompile> {
