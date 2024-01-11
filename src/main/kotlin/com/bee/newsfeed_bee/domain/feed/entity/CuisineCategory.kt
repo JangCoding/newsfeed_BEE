@@ -1,6 +1,6 @@
 package com.bee.newsfeed_bee.domain.feed.entity
 
-enum class CuisineCategory(categoryKoreanName: String) {
+enum class CuisineCategory(val categoryKoreanName: String) {
     KOREAN("한식"),
     BUNSIK("분식"),
     CHINESE("중식"),

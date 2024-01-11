@@ -4,10 +4,7 @@ import com.bee.newsfeed_bee.domain.feed.dto.FeedCreateRequest
 import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
 import com.bee.newsfeed_bee.util.jpaBaseEntity.BaseEntity
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import java.time.OffsetDateTime
 
 @Entity
@@ -15,7 +12,7 @@ class Feed( // TODO: 수정 가능한 속성에 대해서는 더 논의할 필�
     var deletedDateTime: OffsetDateTime?,
     val userId: Long, // TODO: User entity는 별도로 작업하고 있으므로 추후 User entity merge 시 변경할 것
     var storeName: String,
-    var cuisineCategory: CuisineCategory,
+    @Convert(converter = CuisineCategoryConverter::class) var category: CuisineCategory,
     var address: String,
     var score: Int,
     var visitedDateTime: OffsetDateTime,
@@ -36,7 +33,7 @@ fun Feed.toResponse(): FeedResponse {
         createdDateTime = this.createdDateTime,
         lastModifiedDateTime = this.lastModifiedDateTime,
         storeName = this.storeName,
-        category = this.cuisineCategory,
+        category = this.category,
         address = this.address,
         score = this.score,
         visitedDateTime = this.visitedDateTime,
@@ -48,7 +45,7 @@ fun Feed.toResponse(): FeedResponse {
 
 fun Feed.updateFrom(request: FeedUpdateRequest): Feed {
     this.storeName = request.storeName
-    this.cuisineCategory = request.category
+    this.category = request.category
     this.address = request.address
     this.score = request.score
     this.visitedDateTime = request.visitedDateTime
@@ -64,7 +61,7 @@ fun FeedCreateRequest.toEntity(): Feed {
         deletedDateTime = null,
         userId = 0, // TODO 현재 인증 관련 부분이 추가되지 않았기 때문에 임시로만 넣어둠
         storeName = this.storeName,
-        cuisineCategory = this.category,
+        category = this.category,
         address = this.address,
         score = this.score,
         visitedDateTime = this.visitedDateTime,
