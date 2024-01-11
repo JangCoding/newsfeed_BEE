@@ -34,7 +34,7 @@ class ReplyServiceImpl(
 
     override fun getReply(replyId: Long): ReplyResponse {
         return replyRepository.findByIdAndDeletedAtIsNull(replyId)
-            ?.let{ it.toResponse()}
+            ?.toResponse()
             ?: throw ModelNotFoundException("Reply", replyId)
     }
 
@@ -69,8 +69,12 @@ class ReplyServiceImpl(
         if (reply.password != request.password)
             throw InvalidCredentialsException("Password", "Reply")
 
+        if(request.contents.length !in 1 .. CONTENTS_MAX)
+            throw InputLengthException("Contents",request.password.length,1,CONTENTS_MAX)
+
         reply.contents = request.contents
         reply.updatedAt = OffsetDateTime.now()
+
 
         return reply.toResponse()
     }
