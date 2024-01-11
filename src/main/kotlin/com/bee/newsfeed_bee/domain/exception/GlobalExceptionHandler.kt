@@ -28,4 +28,11 @@ class GlobalExceptionHandler {
             .body(ErrorResponse(message = e.message))
     }
 
+    @ExceptionHandler(InputLengthException::class)
+    fun handleInputLengthException(e: InputLengthException) : ResponseEntity<ErrorResponse>{
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(message = e.message))
+    }
+
 }
