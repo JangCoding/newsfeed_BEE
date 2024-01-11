@@ -17,8 +17,12 @@ import java.time.OffsetDateTime
 class FeedService(
     private val feedRepository: FeedRepository
 ) {
-    fun getFeedList(pageable: Pageable): Page<FeedResponse> {
-        return feedRepository.findAll(pageable).map { it.toResponse() }
+    fun getFeedList(category: String?, pageable: Pageable): Page<FeedResponse> {
+        return if (category == null) {
+            feedRepository.findAllByDeletedDateTimeIsNull(pageable).map { it.toResponse() }
+        } else {
+            feedRepository.findAllByCategoryAndDeletedDateTimeIsNull(category, pageable).map { it.toResponse() }
+        }
     }
 
     fun getFeed(feedId: Long): FeedResponse {
