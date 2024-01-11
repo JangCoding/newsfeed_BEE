@@ -5,7 +5,6 @@ import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
 import com.bee.newsfeed_bee.domain.feed.service.FeedService
 import jakarta.validation.Valid
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.Direction.DESC
@@ -21,12 +20,13 @@ class FeedController(
 
     @GetMapping
     fun getFeedList(
-        @RequestParam(name = "category", required = false) category: String?,
+        @RequestParam(required = false) category: String?,
+        @RequestParam(required = false) address: String?,
         @RequestParam(name = "page", required = false, defaultValue = "1") pageNumber: Int,
-    ): ResponseEntity<Page<FeedResponse>> {
+    ): ResponseEntity<List<FeedResponse>> {
 
         return PageRequest.of(pageNumber - BASE_PAGE_NUMBER, DEFAULT_FEED_PAGE_SIZE, defaultFeedSort)
-            .let { feedService.getFeedList(category, it) }
+            .let { feedService.getFeedList(category, address, it) }
             .let {
                 ResponseEntity
                     .status(HttpStatus.OK)
