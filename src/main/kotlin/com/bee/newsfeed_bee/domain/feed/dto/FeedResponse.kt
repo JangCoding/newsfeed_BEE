@@ -1,5 +1,6 @@
 package com.bee.newsfeed_bee.domain.feed.dto
 
+import com.bee.newsfeed_bee.domain.feed.entity.CuisineCategory
 import java.time.OffsetDateTime
 
 data class FeedResponse( // TODO API 명세와 프로퍼티 순서 다름
@@ -8,7 +9,7 @@ data class FeedResponse( // TODO API 명세와 프로퍼티 순서 다름
     val createdDateTime: OffsetDateTime,
     val lastModifiedDateTime: OffsetDateTime,
     val storeName: String, // TODO: 수정 가능한 속성에 대해서는 더 논의할 필요가 있음
-    val category: String,
+    val category: CuisineCategory,
     val address: String,
     val score: Int,
     val visitedDateTime: OffsetDateTime,

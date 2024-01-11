@@ -14,13 +14,13 @@ import java.time.OffsetDateTime
 class Feed( // TODO: 수정 가능한 속성에 대해서는 더 논의할 필요가 있음
     var deletedDateTime: OffsetDateTime?,
     val userId: Long, // TODO: User entity는 별도로 작업하고 있으므로 추후 User entity merge 시 변경할 것
-    var storeName: String, // store
-    var category: String, // cuisineType? // enum // store
-    var address: String, // store
+    var storeName: String,
+    var cuisineCategory: CuisineCategory,
+    var address: String,
     var score: Int,
     var visitedDateTime: OffsetDateTime,
     var waited: Boolean,
-    var storeSize: Int, // enum
+    var storeSize: Int, // enum?
     var content: String,
 ) : BaseEntity() {
 
@@ -36,7 +36,7 @@ fun Feed.toResponse(): FeedResponse {
         createdDateTime = this.createdDateTime,
         lastModifiedDateTime = this.lastModifiedDateTime,
         storeName = this.storeName,
-        category = this.category,
+        category = this.cuisineCategory,
         address = this.address,
         score = this.score,
         visitedDateTime = this.visitedDateTime,
@@ -48,7 +48,7 @@ fun Feed.toResponse(): FeedResponse {
 
 fun Feed.updateFrom(request: FeedUpdateRequest): Feed {
     this.storeName = request.storeName
-    this.category = request.category
+    this.cuisineCategory = request.category
     this.address = request.address
     this.score = request.score
     this.visitedDateTime = request.visitedDateTime
@@ -64,7 +64,7 @@ fun FeedCreateRequest.toEntity(): Feed {
         deletedDateTime = null,
         userId = 0, // TODO 현재 인증 관련 부분이 추가되지 않았기 때문에 임시로만 넣어둠
         storeName = this.storeName,
-        category = this.category,
+        cuisineCategory = this.category,
         address = this.address,
         score = this.score,
         visitedDateTime = this.visitedDateTime,
