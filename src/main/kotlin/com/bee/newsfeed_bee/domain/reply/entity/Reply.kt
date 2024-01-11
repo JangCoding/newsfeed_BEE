@@ -22,7 +22,7 @@ class Reply(
     var contents : String,
 
     @Column(name = "created_date_time")
-    var createdAt: OffsetDateTime = OffsetDateTime.now(),
+    val createdAt: OffsetDateTime = OffsetDateTime.now(),
 
     @Column(name = "last_modified_time")
     var updatedAt : OffsetDateTime ?= null,
