@@ -3,6 +3,7 @@ package com.bee.newsfeed_bee.domain.feed.controller
 import com.bee.newsfeed_bee.domain.feed.dto.FeedCreateRequest
 import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
+import com.bee.newsfeed_bee.domain.feed.entity.CuisineCategory
 import com.bee.newsfeed_bee.domain.feed.service.FeedService
 import jakarta.validation.Valid
 import org.springframework.data.domain.PageRequest
@@ -20,7 +21,7 @@ class FeedController(
 
     @GetMapping
     fun getFeedList(
-        @RequestParam(required = false) category: String?,
+        @RequestParam(required = false) category: CuisineCategory?,
         @RequestParam(required = false) address: String?,
         @RequestParam(name = "page", required = false, defaultValue = "1") pageNumber: Int,
     ): ResponseEntity<List<FeedResponse>> {
