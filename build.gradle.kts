@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.21"
     kotlin("plugin.spring") version "1.9.21"
     kotlin("plugin.noarg") version "1.8.22"
+    kotlin("kapt") version "1.9.21"
 }
 
 group = "com.BEE"
@@ -38,6 +39,7 @@ allOpen {
     annotation("jakarta.persistence.Embeddable")
 }
 
+val queryDslVersion = "5.0.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -63,6 +65,10 @@ dependencies {
 
     // bean validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    // queryDSL
+    implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")
+    kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta")
 }
 
 tasks.withType<KotlinCompile> {
