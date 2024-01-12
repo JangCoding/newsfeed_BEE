@@ -3,6 +3,7 @@ package com.bee.newsfeed_bee.domain.feed.service
 import com.bee.newsfeed_bee.domain.feed.dto.FeedCreateRequest
 import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
+import com.bee.newsfeed_bee.domain.feed.entity.CuisineCategory
 import com.bee.newsfeed_bee.domain.feed.entity.toEntity
 import com.bee.newsfeed_bee.domain.feed.entity.toResponse
 import com.bee.newsfeed_bee.domain.feed.entity.updateFrom
@@ -16,13 +17,8 @@ import java.time.OffsetDateTime
 class FeedService(
     private val feedRepository: FeedRepository
 ) {
-    fun getFeedList(category: String?, address: String?, pageable: Pageable): List<FeedResponse> {
-//        return if (category == null) {
-//            feedRepository.findAllByDeletedDateTimeIsNull(pageable).map { it.toResponse() }
-//        } else {
-//            feedRepository.findAllByCategoryAndDeletedDateTimeIsNull(category, pageable).map { it.toResponse() }
-//        }
-        return feedRepository.findAllByCategoryDongDeletedDateTime(category, address, pageable).map { it.toResponse() }
+    fun getFeedList(category: CuisineCategory?, address: String?, pageable: Pageable): List<FeedResponse> {
+        return feedRepository.findAllByCategoryAddressDeletedDateTime(category, address, pageable).map { it.toResponse() }
     }
 
     fun getFeed(feedId: Long): FeedResponse {

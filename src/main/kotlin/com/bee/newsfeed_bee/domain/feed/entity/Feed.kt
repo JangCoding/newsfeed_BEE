@@ -4,23 +4,20 @@ import com.bee.newsfeed_bee.domain.feed.dto.FeedCreateRequest
 import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
 import com.bee.newsfeed_bee.util.jpaBaseEntity.BaseEntity
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import java.time.OffsetDateTime
 
 @Entity
 class Feed( // TODO: 수정 가능한 속성에 대해서는 더 논의할 필요가 있음
     var deletedDateTime: OffsetDateTime?,
     val userId: Long, // TODO: User entity는 별도로 작업하고 있으므로 추후 User entity merge 시 변경할 것
-    var storeName: String, // store
-    var category: String, // cuisineType? // enum // store
-    var address: String, // store
+    var storeName: String,
+    @Convert(converter = CuisineCategoryConverter::class) var category: CuisineCategory,
+    var address: String,
     var score: Int,
     var visitedDateTime: OffsetDateTime,
     var waited: Boolean,
-    var storeSize: Int, // enum
+    var storeSize: Int, // enum?
     var content: String,
 ) : BaseEntity() {
 
