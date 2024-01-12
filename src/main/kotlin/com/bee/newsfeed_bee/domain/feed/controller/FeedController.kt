@@ -54,7 +54,7 @@ class FeedController(
         return feedService.createFeed(feedCreateRequest)
             .let {
                 ResponseEntity
-                    .status(HttpStatus.OK)
+                    .status(HttpStatus.CREATED)
                     .body(it)
             }
     }
@@ -79,7 +79,7 @@ class FeedController(
         return feedService.deleteFeed(feedId)
             .let {
                 ResponseEntity
-                    .status(HttpStatus.OK)
+                    .status(HttpStatus.NO_CONTENT)
                     .build()
             }
     }
