@@ -14,11 +14,15 @@ import java.time.OffsetDateTime
 //@Table(name = "feed")
 
 class Reply(
-    _userName : String,
+    @Column(name="user_name")
+    var userName : String,
 
-    _password : String,
+    @JsonIgnore
+    @Column(name = "password")
+    var password : String,
 
-    _content : String,
+    @Column(name = "content")
+    var content : String,
 
     @Column
     var deletedDateTime: OffsetDateTime? = null,
@@ -32,24 +36,10 @@ class Reply(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id:Long?=null
 
-    @Column(name="user_name")
-    var userName = _userName
-        .also{if(it.isEmpty() || it.length > USERNAME_MAX)
-            throw InputLengthException("UserName",_userName.length,1,USERNAME_MAX)
-        }
+    init{
+        validate()
+    }
 
-    @JsonIgnore
-    @Column(name = "password")
-    var password = _password
-        .also{if(it.length < 4 || it.length > PASSWORD_MAX)
-            throw InputLengthException("Password",_password.length,PASSWORD_MIN,PASSWORD_MAX)
-        }
-
-    @Column(name = "content")
-    var content = _content
-        .also{if(it.isEmpty() || it.length > CONTENT_MAX)
-            throw InputLengthException("Content",_content.length,1,CONTENT_MAX)
-        }
 
     companion object{
         const val USERNAME_MAX = 20
@@ -59,6 +49,16 @@ class Reply(
     }
 }
 
+fun Reply.validate(){
+    if(userName.isEmpty() || userName.length > Reply.USERNAME_MAX)
+        throw InputLengthException("UserName",userName.length,1, Reply.USERNAME_MAX)
+
+    if(password.length < 4 || password.length > Reply.PASSWORD_MAX)
+        throw InputLengthException("Password",password.length, Reply.PASSWORD_MIN, Reply.PASSWORD_MAX)
+
+    if(content.isEmpty() || content.length > Reply.CONTENT_MAX)
+        throw InputLengthException("Content",content.length,1, Reply.CONTENT_MAX)
+}
 
 fun Reply.toResponse(): ReplyResponse {
     return ReplyResponse(
@@ -72,5 +72,5 @@ fun Reply.toResponse(): ReplyResponse {
 
 fun Reply.chkPassword(input:String){
     if(this.password != input)
-            throw InvalidCredentialsException("Password","Reply")
+        throw InvalidCredentialsException("Password","Reply")
 }

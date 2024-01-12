@@ -35,4 +35,10 @@ class GlobalExceptionHandler {
             .body(ErrorResponse(message = e.message))
     }
 
+    @ExceptionHandler(InputRangeException::class)
+    fun handleInputRangeException(e: InputRangeException) : ResponseEntity<ErrorResponse>{
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(message = e.message))
+    }
 }

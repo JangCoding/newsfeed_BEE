@@ -9,6 +9,7 @@ import com.bee.newsfeed_bee.domain.reply.dto.ReplyUpdateRequest
 import com.bee.newsfeed_bee.domain.reply.entity.Reply
 import com.bee.newsfeed_bee.domain.reply.entity.chkPassword
 import com.bee.newsfeed_bee.domain.reply.entity.toResponse
+import com.bee.newsfeed_bee.domain.reply.entity.validate
 import com.bee.newsfeed_bee.domain.reply.repository.ReplyRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -37,11 +38,12 @@ class ReplyServiceImpl(
         val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId)
             ?: throw ModelNotFoundException("Feed",feedId)
         return Reply(
-            _userName = request.userName,
-            _password = request.password,
-            _content = request.contents,
+            userName = request.userName,
+            password = request.password,
+            content = request.contents,
             feed = feed
-        ).let{replyRepository.save(it)}.toResponse()
+        ).also{it.validate()}
+            .let{replyRepository.save(it)}.toResponse()
 
     }
 

@@ -3,10 +3,7 @@ package com.bee.newsfeed_bee.domain.feed.service
 import com.bee.newsfeed_bee.domain.feed.dto.FeedCreateRequest
 import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
-import com.bee.newsfeed_bee.domain.feed.entity.CuisineCategory
-import com.bee.newsfeed_bee.domain.feed.entity.toEntity
-import com.bee.newsfeed_bee.domain.feed.entity.toResponse
-import com.bee.newsfeed_bee.domain.feed.entity.updateFrom
+import com.bee.newsfeed_bee.domain.feed.entity.*
 import com.bee.newsfeed_bee.domain.feed.repository.FeedRepository
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -27,13 +24,16 @@ class FeedService(
 
     fun createFeed(feedCreateRequest: FeedCreateRequest): FeedResponse {
         return feedCreateRequest.toEntity()
-            .let { feedRepository.save(it) }.toResponse()
+            .also{it.validate()}
+            .let { feedRepository.save(it) }
+            .toResponse()
     }
 
     @Transactional
     fun updateFeed(feedId: Long, feedUpdateRequest: FeedUpdateRequest): FeedResponse {
         return feedRepository.findByIdAndDeletedDateTimeIsNull(feedId) // TODO EmptyResultDataAccessException 처리
             .updateFrom(feedUpdateRequest)
+            .also{it.validate()}
             .toResponse()
     }
 
