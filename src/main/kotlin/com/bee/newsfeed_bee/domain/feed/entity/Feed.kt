@@ -1,8 +1,11 @@
 package com.bee.newsfeed_bee.domain.feed.entity
 
+import com.bee.newsfeed_bee.domain.exception.InputLengthException
+import com.bee.newsfeed_bee.domain.exception.InputRangeException
 import com.bee.newsfeed_bee.domain.feed.dto.FeedCreateRequest
 import com.bee.newsfeed_bee.domain.feed.dto.FeedResponse
 import com.bee.newsfeed_bee.domain.feed.dto.FeedUpdateRequest
+import com.bee.newsfeed_bee.domain.reply.entity.Reply
 import com.bee.newsfeed_bee.util.jpaBaseEntity.BaseEntity
 import jakarta.persistence.*
 import java.time.OffsetDateTime
@@ -24,6 +27,17 @@ class Feed( // TODO: 수정 가능한 속성에 대해서는 더 논의할 필�
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+
+    init{
+        validate()
+    }
+    companion object{
+        const val STORENAME_MAX = 25
+        const val CATEGORY_MAX = 100
+        const val ADDRESS_MAX = 100
+        const val SCORE_MAX = 5
+        const val CONTENT_MAX = 500
+    }
 }
 
 fun Feed.toResponse(): FeedResponse {
@@ -55,6 +69,19 @@ fun Feed.updateFrom(request: FeedUpdateRequest): Feed {
 
     return this
 }
+
+fun Feed.validate() {
+    if (this.storeName.isEmpty() || this.storeName.length > Feed.STORENAME_MAX)
+        throw InputLengthException("UserName",storeName.length,1, Feed.STORENAME_MAX)
+    if (this.address.isEmpty() || this.address.length > Feed.ADDRESS_MAX)
+        throw InputLengthException("Address",address.length,1, Feed.ADDRESS_MAX)
+    if (this.score < 1 || this.score > 5)
+        throw InputRangeException("Score",score,1, Feed.SCORE_MAX)
+    if (this.content.isEmpty() || this.content.length > Feed.CONTENT_MAX)
+        throw InputLengthException("Content",content.length,1, Feed.CONTENT_MAX)
+}
+
+
 
 fun FeedCreateRequest.toEntity(): Feed {
     return Feed(

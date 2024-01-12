@@ -39,16 +39,7 @@ class Reply(
     init{
         validate()
     }
-    fun validate(){
-        if(userName.isEmpty() || userName.length > USERNAME_MAX)
-            throw InputLengthException("UserName",userName.length,1,USERNAME_MAX)
 
-        if(password.length < 4 || password.length > PASSWORD_MAX)
-            throw InputLengthException("Password",password.length,PASSWORD_MIN,PASSWORD_MAX)
-
-        if(content.isEmpty() || content.length > CONTENT_MAX)
-            throw InputLengthException("Content",content.length,1,CONTENT_MAX)
-    }
 
     companion object{
         const val USERNAME_MAX = 20
@@ -58,6 +49,16 @@ class Reply(
     }
 }
 
+fun Reply.validate(){
+    if(userName.isEmpty() || userName.length > Reply.USERNAME_MAX)
+        throw InputLengthException("UserName",userName.length,1, Reply.USERNAME_MAX)
+
+    if(password.length < 4 || password.length > Reply.PASSWORD_MAX)
+        throw InputLengthException("Password",password.length, Reply.PASSWORD_MIN, Reply.PASSWORD_MAX)
+
+    if(content.isEmpty() || content.length > Reply.CONTENT_MAX)
+        throw InputLengthException("Content",content.length,1, Reply.CONTENT_MAX)
+}
 
 fun Reply.toResponse(): ReplyResponse {
     return ReplyResponse(
@@ -71,5 +72,5 @@ fun Reply.toResponse(): ReplyResponse {
 
 fun Reply.chkPassword(input:String){
     if(this.password != input)
-            throw InvalidCredentialsException("Password","Reply")
+        throw InvalidCredentialsException("Password","Reply")
 }

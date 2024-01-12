@@ -9,6 +9,7 @@ import com.bee.newsfeed_bee.domain.reply.dto.ReplyUpdateRequest
 import com.bee.newsfeed_bee.domain.reply.entity.Reply
 import com.bee.newsfeed_bee.domain.reply.entity.chkPassword
 import com.bee.newsfeed_bee.domain.reply.entity.toResponse
+import com.bee.newsfeed_bee.domain.reply.entity.validate
 import com.bee.newsfeed_bee.domain.reply.repository.ReplyRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -54,8 +55,6 @@ class ReplyServiceImpl(
         reply.chkPassword(request.password)
 
         reply.content = request.contents
-
-        reply.validate()
 
         return reply.toResponse()
     }
