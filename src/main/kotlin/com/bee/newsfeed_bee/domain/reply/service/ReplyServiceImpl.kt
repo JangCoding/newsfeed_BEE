@@ -37,11 +37,12 @@ class ReplyServiceImpl(
         val feed = feedRepository.findByIdAndDeletedDateTimeIsNull(feedId)
             ?: throw ModelNotFoundException("Feed",feedId)
         return Reply(
-            _userName = request.userName,
-            _password = request.password,
-            _content = request.contents,
+            userName = request.userName,
+            password = request.password,
+            content = request.contents,
             feed = feed
-        ).let{replyRepository.save(it)}.toResponse()
+        ).also{it.validate()}
+            .let{replyRepository.save(it)}.toResponse()
 
     }
 
@@ -53,6 +54,8 @@ class ReplyServiceImpl(
         reply.chkPassword(request.password)
 
         reply.content = request.contents
+
+        reply.validate()
 
         return reply.toResponse()
     }

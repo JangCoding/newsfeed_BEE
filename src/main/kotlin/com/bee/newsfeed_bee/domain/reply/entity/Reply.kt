@@ -14,11 +14,15 @@ import java.time.OffsetDateTime
 //@Table(name = "feed")
 
 class Reply(
-    _userName : String,
+    @Column(name="user_name")
+    var userName : String,
 
-    _password : String,
+    @JsonIgnore
+    @Column(name = "password")
+    var password : String,
 
-    _content : String,
+    @Column(name = "content")
+    var content : String,
 
     @Column
     var deletedDateTime: OffsetDateTime? = null,
@@ -32,24 +36,19 @@ class Reply(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id:Long?=null
 
-    @Column(name="user_name")
-    var userName = _userName
-        .also{if(it.isEmpty() || it.length > USERNAME_MAX)
-            throw InputLengthException("UserName",_userName.length,1,USERNAME_MAX)
-        }
+    init{
+        validate()
+    }
+    fun validate(){
+        if(userName.isEmpty() || userName.length > USERNAME_MAX)
+            throw InputLengthException("UserName",userName.length,1,USERNAME_MAX)
 
-    @JsonIgnore
-    @Column(name = "password")
-    var password = _password
-        .also{if(it.length < 4 || it.length > PASSWORD_MAX)
-            throw InputLengthException("Password",_password.length,PASSWORD_MIN,PASSWORD_MAX)
-        }
+        if(password.length < 4 || password.length > PASSWORD_MAX)
+            throw InputLengthException("Password",password.length,PASSWORD_MIN,PASSWORD_MAX)
 
-    @Column(name = "content")
-    var content = _content
-        .also{if(it.isEmpty() || it.length > CONTENT_MAX)
-            throw InputLengthException("Content",_content.length,1,CONTENT_MAX)
-        }
+        if(content.isEmpty() || content.length > CONTENT_MAX)
+            throw InputLengthException("Content",content.length,1,CONTENT_MAX)
+    }
 
     companion object{
         const val USERNAME_MAX = 20
