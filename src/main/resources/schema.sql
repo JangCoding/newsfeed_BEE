@@ -16,3 +16,17 @@ create table feed
     content           varchar(1023) not null,
     primary key (id)
 );
+
+drop table if exists reply cascade;
+create table reply
+(
+    id                      bigserial,
+    created_date_time       timestamp with time zone not null,
+    last_modified_date_time timestamp with time zone not null,
+    deleted_date_time       timestamp with time zone,
+    feed_id                 bigint,
+    user_name               varchar(45),
+    password                varchar(45),
+    content                 text not null,
+    primary key (id)
+);
