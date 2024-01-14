@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### 실행 환경 중 ignore 필요 파일
+envs-constants.yml
+
 ### STS ###
 .apt_generated
 .classpath
